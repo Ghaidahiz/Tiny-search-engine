@@ -3,7 +3,7 @@ package src;
 class LinkedList2<T, V>  {
 
     private Node2<T, V> head;
-    private Node2<T, V> current;
+    private Node2<T, V>  current;
 
     public LinkedList2() {
         head = current = null;
