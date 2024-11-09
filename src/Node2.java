@@ -1,13 +1,17 @@
 package src;
-public class Node2<T,V> extends Node<T> {
-    
+public class Node2<T,V>  {
+    T data;
     Node2<T,V> next;
+    Node2<T,V> previous;
     LinkedList<V> list;
 
+
     public Node2(T val){
-        super(val);
+        data= val;
         next=null;
-        list = new LinkedList<>();
+        previous=null;
+        list = new LinkedList<V>();
 
     }
+
 }
