@@ -6,7 +6,7 @@ public class Node2<T,V>  {
     LinkedList<V> list;
 
 
-    public Node2(T val){
+    public Node2 (T val){
         data= val;
         next=null;
         previous=null;
