@@ -10,7 +10,7 @@ public class Main {
         // index.getList().findfirst();
         // System.out.print(index.getList().retrieve()=="" );
 
-        // the folowing code is just to print our index lst
+        // the folowing code is just to print our index list to enjoy watching it 
         if (!index.empty()) {
             index.findfirst();
             while (!index.last()) {
@@ -28,10 +28,10 @@ public class Main {
             System.out.print("\n\n" + index.retrieve() + ": ");
             index.getList().findfirst();
             while (!index.getList().last()) {
-                System.out.print(index.getList().retrieve() + ", ");
+                System.out.print(index.getList().retrieve() + "|");
                 index.getList().findnext();
             }
-            System.out.print(index.getList().retrieve() + ", ");
+            System.out.print(index.getList().retrieve() + "|");
         }
         // for (String value : line)
         // System.out.println(value+"\n");
@@ -75,12 +75,12 @@ public class Main {
             line = br.readLine();
             line = line.toLowerCase();
             // line= line.replace("'","");
-            words = line.split("[,; .\"" + i + "]+");
+            words = line.split("[,;\\- .\"" + i + "]+");
             indexList.insert(i);
 
             for (String word : words) {
                 flag = true;
-                if (word != "") {
+                if (!word.isEmpty()) {
                     index = word.charAt(0) - 97;
                     stop[index].findfirst();
                     while (!stop[index].last()) {
@@ -118,6 +118,7 @@ public class Main {
                                                                           // method will use the keys and the values in
                                                                           // the previously made inverted index list
                                                                           // to implement it using a BST.
+        invList.findfirst();   //to start the insertion from the first and not missing any node                                                                  
         while (!invList.last()) {
             String currentkey = invList.retrieve();
             LinkedList<Integer> affiliatedDocs = invList.getList();
