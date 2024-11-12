@@ -104,9 +104,28 @@ public class Main {
         return indexList;
     }
 
-    // public static void removeStopWords(LinkedList2<Integer, String> indexList) {}
+    public static void removeStopWords(LinkedList2<Integer, String> indexList) {
+    }
 
     public static LinkedList2<String, Integer> createInvertedIndexList() {
         return new LinkedList2<>();
+    }
+
+    public static BST<LinkedList<Integer>> createInvertedIndexBST(LinkedList2<String, Integer> invList) {
+        BST<LinkedList<Integer>> invBST = new BST<LinkedList<Integer>>(); // creating a blank binary search tree that
+                                                                          // uses strings as keys and has a list of
+                                                                          // integers (document IDs) as values, this
+                                                                          // method will use the keys and the values in
+                                                                          // the previously made inverted index list
+                                                                          // to implement it using a BST.
+        while (!invList.last()) {
+            String currentkey = invList.retrieve();
+            LinkedList<Integer> affiliatedDocs = invList.getList();
+            invBST.insert(currentkey, affiliatedDocs);
+            invList.findnext();
+        }
+        invBST.insert(invList.retrieve(), invList.getList());// for the last word
+
+        return invBST;
     }
 }
