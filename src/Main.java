@@ -106,11 +106,11 @@ public class Main<T> {
         return indexList;
     }
 
-    public static LinkedList2<String, Integer> createInvertedIndexList() {
-        return new LinkedList2<>();
+    public static LinkedList<LinkedList<Integer>> createInvertedIndexList() {
+        return new LinkedList<LinkedList<Integer>>();
     }
 
-    public static BST<LinkedList<Integer>> createInvertedIndexBST(LinkedList2<String, Integer> invList) {
+    public static BST<LinkedList<Integer>> createInvertedIndexBST(LinkedList<LinkedList<Integer>> invList) {
         BST<LinkedList<Integer>> invBST = new BST<LinkedList<Integer>>(); // creating a blank binary search tree that
                                                                           // uses strings as keys and has a list of
                                                                           // integers (document IDs) as values, this
@@ -119,17 +119,17 @@ public class Main<T> {
                                                                           // to implement it using a BST.
         invList.findFirst(); // to start the insertion from the first and not missing any node
         while (!invList.last()) {
-            String currentkey = invList.retrieve();
-            LinkedList<Integer> affiliatedDocs = invList.getList();
+            String currentkey = invList.getWord();
+            LinkedList<Integer> affiliatedDocs = invList.retrieve();
             invBST.insert(currentkey, affiliatedDocs);
             invList.findNext();
         }
-        invBST.insert(invList.retrieve(), invList.getList());// for the last word
+        invBST.insert(invList.getWord(), invList.retrieve());// for the last word
 
         return invBST;
     }
 
-    static LinkedList<Integer> booleanRetrivalinvertedIndex(String query, LinkedList2<String, Integer> invertedIndex) {
+    static LinkedList<Integer> booleanRetrivalinvertedIndex(String query, LinkedList<LinkedList<Integer>> invertedIndex) {
         query = query.toLowerCase();
         String[] qList = query.split(" ");
         LinkedStack<LinkedList<Integer>> stack = new LinkedStack<LinkedList<Integer>>();

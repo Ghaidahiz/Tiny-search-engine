@@ -37,12 +37,32 @@ public class LinkedList<T> {
         return current.data;
     }
 
+    public String getWord(){
+        return current.word;
+    }
+
     public void update(T val) {
         current.data = val;
     }
 
     public void insert(T val) {
         Node<T> tmp = new Node<T>(val);
+        if (empty()) {
+            current = head = tmp;
+        } else {
+            size++;
+            tmp.next = current.next;
+            tmp.previous = current;
+            if (current.next != null)
+                current.next.previous = tmp;
+            current.next = tmp;
+            current = tmp;
+        }
+    }
+
+    public void insert(T val,String word) {
+        Node<T> tmp = new Node<T>(val);
+        tmp.word=word;
         if (empty()) {
             current = head = tmp;
         } else {
@@ -110,6 +130,15 @@ public class LinkedList<T> {
             
             tmp = tmp.next; // Move to the next node in the outer loop
         }
+    }
+
+    public T retrieveDocumentIDs ( String word){
+        Node<T> tmp =head;
+        while (tmp!=null) {
+            if(tmp.word.equals(word))
+               return tmp.data;
+        }
+        return null;
     }
     
 }
