@@ -37,7 +37,7 @@ public class LinkedList<T> {
         return current.data;
     }
 
-    public String getWord(){
+    public String getWord() {
         return current.word;
     }
 
@@ -60,9 +60,9 @@ public class LinkedList<T> {
         }
     }
 
-    public void insert(T val,String word) {
+    public void insert(T val, String word) {
         Node<T> tmp = new Node<T>(val);
-        tmp.word=word;
+        tmp.word = word;
         if (empty()) {
             current = head = tmp;
         } else {
@@ -93,21 +93,21 @@ public class LinkedList<T> {
             current = current.next;
     }
 
-    public void marge( LinkedList<T> l2){
+    public void marge(LinkedList<T> l2) {
         while (!last()) {
             findNext();
         }
-        current.next=l2.head;
-        l2.head.previous=current;
+        current.next = l2.head;
+        l2.head.previous = current;
     }
 
     public void removeDuplicate() {
-        if (head == null) { 
+        if (head == null) {
             return;
         }
-        Node<T> tmp = head; 
+        Node<T> tmp = head;
         while (tmp != null) {
-            Node<T> q = tmp.next; 
+            Node<T> q = tmp.next;
             while (q != null) {
                 if (q.data.equals(tmp.data)) {
                     if (q.next != null) {
@@ -117,19 +117,40 @@ public class LinkedList<T> {
                         q.previous.next = q.next;
                     }
                     if (q == head) {
-                        head = q.next; 
+                        head = q.next;
                     }
-                    size--; 
+                    size--;
                 }
                 q = q.next;
             }
-            tmp = tmp.next; 
+            tmp = tmp.next;
         }
+    }
+
+    public void calculateFrequency() {
+        if (head == null)
+            return; // empty list
+
+        Node<T> tmp = head;
+
+        while (tmp != null) {
+            tmp.frequency = 1; // the current node's frequency
+            Node<T> q = tmp.next;
+
+            while (q != null) {
+                if (q.data.equals(tmp.data)) {
+                    tmp.frequency++;
+                }
+                q = q.next; // Move to the next node
+            }
+            tmp = tmp.next; // Move to the next node
+        }
+
     }
 
     static LinkedList<Integer> intersection(LinkedList<Integer> l1, LinkedList<Integer> l2) {
         LinkedList<Integer> intersect = new LinkedList<>();
-       
+
         if (!l1.empty() && !l2.empty()) {
             l1.findFirst();
             while (!l1.last()) {
@@ -155,28 +176,28 @@ public class LinkedList<T> {
             }
             if (l1.retrieve() == l2.retrieve())
                 intersect.insert(l1.retrieve());
-           
+
         }
         return intersect;
     }
-    
+
     static LinkedList<Integer> union(LinkedList<Integer> l1, LinkedList<Integer> l2) {
-        if(!l1.empty() && !l2.empty()){
+        if (!l1.empty() && !l2.empty()) {
             l1.marge(l2);
             l1.removeDuplicate();
-            return  l1;
+            return l1;
         }
-        return l1.empty()?l2:l1;
-        
+        return l1.empty() ? l2 : l1;
+
     }
-    
-    public T retrieveDocumentIDs ( String word){
-        Node<T> tmp =head;
-        while (tmp!=null) {
-            if(tmp.word.equals(word))
-               return tmp.data;
+
+    public T retrieveDocumentIDs(String word) {
+        Node<T> tmp = head;
+        while (tmp != null) {
+            if (tmp.word.equals(word))
+                return tmp.data;
         }
         return null;
     }
-    
+
 }

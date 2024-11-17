@@ -99,9 +99,11 @@ public class Main<T> {
                     if (flag) {
                         word = word.replace("'", "");
                         indexList.retrieve().insert(word);
+
                     }
                 }
             }
+            indexList.retrieve().calculateFrequency();
         }
         br.close();
         return indexList;
@@ -213,6 +215,11 @@ public class Main<T> {
         return list;
     }
 
+    static public void rankedRetrieval(){
+        
+
+
+    }
    
 
 }

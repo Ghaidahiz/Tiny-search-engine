@@ -5,6 +5,7 @@ public class Node<T> {
     Node<T> next;
     Node<T> previous;
     String word;
+    int frequency=0;
 
     public Node(T val) {
         data = val;
