@@ -3,6 +3,7 @@ package src;
 public class LinkedList<T> {
     private Node<T> head;
     private Node<T> current;
+    int size;
 
     public LinkedList() {
         head = current = null;
@@ -20,11 +21,11 @@ public class LinkedList<T> {
         return current.previous == null;
     }
 
-    public void findfirst() {
+    public void findFirst() {
         current = head;
     }
 
-    public void findnext() {
+    public void findNext() {
         current = current.next;
     }
 
@@ -45,6 +46,7 @@ public class LinkedList<T> {
         if (empty()) {
             current = head = tmp;
         } else {
+            size++;
             tmp.next = current.next;
             tmp.previous = current;
             if (current.next != null)
@@ -55,6 +57,7 @@ public class LinkedList<T> {
     }
 
     public void remove() {
+        size--;
         if (current == head) {
             head = head.next;
             if (head != null)
@@ -70,4 +73,43 @@ public class LinkedList<T> {
             current = current.next;
     }
 
+    public void marge( LinkedList<T> l2){
+        while (!last()) {
+            findNext();
+        }
+        current.next=l2.head;
+        l2.head.previous=current;
+    }
+
+    public void removeDuplicate() {
+        if (head == null) { // Handle empty list
+            return;
+        }
+        
+        Node<T> tmp = head; // Outer loop traverses the list
+        
+        while (tmp != null) {
+            Node<T> q = tmp.next; // Inner loop checks for duplicates of `tmp`
+            
+            while (q != null) {
+                if (q.data.equals(tmp.data)) {
+                    // Remove duplicate node `q`
+                    if (q.next != null) {
+                        q.next.previous = q.previous;
+                    }
+                    if (q.previous != null) {
+                        q.previous.next = q.next;
+                    }
+                    if (q == head) {
+                        head = q.next; // Update head if necessary
+                    }
+                    size--; // Decrement size
+                }
+                q = q.next; // Move to the next node
+            }
+            
+            tmp = tmp.next; // Move to the next node in the outer loop
+        }
+    }
+    
 }

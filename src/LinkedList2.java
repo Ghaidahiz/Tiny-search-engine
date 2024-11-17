@@ -21,11 +21,11 @@ class LinkedList2<T, V>  {
         return current.previous == null;
     }
 
-    public void findfirst() {
+    public void findFirst() {
         current = head;
     }
 
-    public void findnext() {
+    public void findNext() {
         current = current.next;
     }
 
@@ -54,5 +54,18 @@ class LinkedList2<T, V>  {
             current = tmp;
         }
     }
+
+    public LinkedList<V> retrieveDocumentIDs ( String word){
+        Node2<T, V> tmp =head;
+        LinkedList<Integer> IDs = new LinkedList<Integer>();
+        while (tmp!=null) {
+            if(tmp.data.equals(word))
+               return tmp.list;
+            
+        }
+        return null;
+    }
+
+    
 
 }

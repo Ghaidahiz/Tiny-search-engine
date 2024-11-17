@@ -1,6 +1,6 @@
 package src;
 
-public class BST<T> { //normal BST that has the string as a key to create an inverted index
+public class BST<T>  { // normal BST that has the string as a key to create an inverted index
     BSTNode<T> root, current;
 
     public BST() {
@@ -25,10 +25,10 @@ public class BST<T> { //normal BST that has the string as a key to create an inv
             return false;
         while (p != null) {
             q = p;
-            if (p.key.equalsIgnoreCase(tkey)) { //assuming this inverted index is not case sensitive
+            if (p.key.equalsIgnoreCase(tkey)) { // assuming this inverted index is not case sensitive
                 current = p;
                 return true;
-            } else if (tkey.compareToIgnoreCase(p.key)<0)//p.key larger
+            } else if (tkey.compareToIgnoreCase(p.key) < 0)// p.key larger
                 p = p.left;
             else
                 p = p.right;
@@ -53,7 +53,7 @@ public class BST<T> { //normal BST that has the string as a key to create an inv
 
         else {
             // current is pointing to parent of the new key
-            if (k.compareToIgnoreCase(current.key)<0) //current key is larger
+            if (k.compareToIgnoreCase(current.key) < 0) // current key is larger
                 current.left = p;
             else
                 current.right = p;
@@ -74,9 +74,9 @@ public class BST<T> { //normal BST that has the string as a key to create an inv
         BSTNode<T> q, child = null;
         if (p == null)
             return null;
-        if (key.compareToIgnoreCase(p.key)<0) //p.key larger
+        if (key.compareToIgnoreCase(p.key) < 0) // p.key larger
             p.left = remove_aux(key, p.left, flag); // go left
-        else if (key.compareToIgnoreCase(p.key)>0) //key larger
+        else if (key.compareToIgnoreCase(p.key) > 0) // key larger
             p.right = remove_aux(key, p.right, flag); // go right
         else { // key is found
             flag.set(true);
@@ -109,5 +109,11 @@ public class BST<T> { //normal BST that has the string as a key to create an inv
         remove_key(current.key);
         return insert(key, data);
     }
-        
+
+    public T retrieveDocumentIDs(String word) {
+        if (findkey(word))
+            return current.data;
+        return null;
+    }
+
 }
