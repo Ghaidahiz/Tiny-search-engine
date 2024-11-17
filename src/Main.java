@@ -6,7 +6,7 @@ public class Main<T> {
     public static void main(String[] args) throws Exception {
 
         ArrayList<String> index = createIndexList();
-        LinkedList<Integer> list = booleanRetrivalindext("head or ISSUed", index);
+        LinkedList<Integer> list = booleanRetrivalindext("market OR sports AND warming", index);
         if(!list.empty()){ 
             list.findFirst();
         while (!list.last()) {
@@ -45,6 +45,7 @@ public class Main<T> {
         
 
     }
+                                //***********************/Creating Indices/****************** */
 
     public static ArrayList<String> createIndexList() throws Exception {
 
@@ -129,26 +130,37 @@ public class Main<T> {
         return invBST;
     }
 
+  
+                           // ****************** Boolean Retrieval*****************//
+
     static LinkedList<Integer> booleanRetrivalinvertedIndex(String query, LinkedList<LinkedList<Integer>> invertedIndex) {
         query = query.toLowerCase();
         String[] qList = query.split(" ");
         LinkedStack<LinkedList<Integer>> stack = new LinkedStack<LinkedList<Integer>>();
         for (int i = 0; i < qList.length - 1; i++) {
-            if (i == 0)
-                stack.push(invertedIndex.retrieveDocumentIDs(qList[i]));
-            else {
+            if (i == 0){
+                if(invertedIndex.retrieveDocumentIDs(qList[i])==null)
+                stack.push(new LinkedList<Integer>());
+               else stack.push(invertedIndex.retrieveDocumentIDs(qList[i]));
+             } else {
 
-                if (qList[i].equalsIgnoreCase("or"))
-                    stack.push(invertedIndex.retrieveDocumentIDs(qList[i + 1]));
+                if (qList[i].equalsIgnoreCase("or")){
+                    if(invertedIndex.retrieveDocumentIDs(qList[i+1])==null)
+                      stack.push(new LinkedList<Integer>());
+                    else stack.push(invertedIndex.retrieveDocumentIDs(qList[i+1]));
+                }
                 else if (qList[i].equalsIgnoreCase("and")) {
-                    stack.push(intersection(stack.pop(), invertedIndex.retrieveDocumentIDs(qList[i + 1])));
+                    if(invertedIndex.retrieveDocumentIDs(qList[i + 1])==null)
+                    stack.push(new LinkedList<Integer>());
+                    else
+                    stack.push(LinkedList.intersection(stack.pop(), invertedIndex.retrieveDocumentIDs(qList[i + 1])));
                 } else
                     continue;
             }
         }
         LinkedList<Integer> list = stack.pop();
         while (!stack.empty()) {
-            list = union(list, stack.pop());
+            list = LinkedList.union(list, stack.pop());
         }
         return list;
     }
@@ -165,14 +177,14 @@ public class Main<T> {
                 if (qList[i].equalsIgnoreCase("or"))
                     stack.push(index.retrieveDocumentIDs(qList[i + 1]));
                 else if (qList[i].equalsIgnoreCase("and")) {
-                    stack.push(intersection(stack.pop(), index.retrieveDocumentIDs(qList[i + 1])));
+                    stack.push(LinkedList.intersection(stack.pop(), index.retrieveDocumentIDs(qList[i + 1])));
                 } else
                     continue;
             }
         }
         LinkedList<Integer> list = stack.pop();
         while (!stack.empty()) {
-            list = union(list, stack.pop());
+            list = LinkedList.union(list, stack.pop());
         }
         return list;
     }
@@ -189,59 +201,18 @@ public class Main<T> {
                 if (qList[i].equalsIgnoreCase("or"))
                     stack.push(tree.retrieveDocumentIDs(qList[i + 1]));
                 else if (qList[i].equalsIgnoreCase("and")) {
-                    stack.push(intersection(stack.pop(), tree.retrieveDocumentIDs(qList[i + 1])));
+                    stack.push(LinkedList.intersection(stack.pop(), tree.retrieveDocumentIDs(qList[i + 1])));
                 } else
                     continue;
             }
         }
         LinkedList<Integer> list = stack.pop();
         while (!stack.empty()) {
-            list = union(list, stack.pop());
+            list = LinkedList.union(list, stack.pop());
         }
         return list;
     }
 
-    static LinkedList<Integer> intersection(LinkedList<Integer> l1, LinkedList<Integer> l2) {
-        LinkedList<Integer> intersect = new LinkedList<>();
-       
-        if (!l1.empty() && !l2.empty()) {
-            l1.findFirst();
-            while (!l1.last()) {
-                l2.findFirst();
-                while (!l2.last()) {
-                    if (l1.retrieve() == l2.retrieve()) {
-                        intersect.insert(l1.retrieve());
-                        break;
-                    }
-                    l2.findNext();
-                }
-                if (l1.retrieve() == l2.retrieve())
-                    intersect.insert(l1.retrieve());
-                l1.findNext();
-            }
-            l2.findFirst(); // for the last elemant in l1
-            while (!l2.last()) {
-                if (l1.retrieve() == l2.retrieve()) {
-                    intersect.insert(l1.retrieve());
-                    break;
-                }
-                l2.findNext();
-            }
-            if (l1.retrieve() == l2.retrieve())
-                intersect.insert(l1.retrieve());
-           
-        }
-        return intersect;
-    }
-
-    static LinkedList<Integer> union(LinkedList<Integer> l1, LinkedList<Integer> l2) {
-        if(!l1.empty() && !l2.empty()){
-            l1.marge(l2);
-           // l1.removeDuplicate();
-            return  l1;
-        }
-        return l1.empty()?l2:l1;
-        
-    }
+   
 
 }

@@ -102,18 +102,14 @@ public class LinkedList<T> {
     }
 
     public void removeDuplicate() {
-        if (head == null) { // Handle empty list
+        if (head == null) { 
             return;
         }
-        
-        Node<T> tmp = head; // Outer loop traverses the list
-        
+        Node<T> tmp = head; 
         while (tmp != null) {
-            Node<T> q = tmp.next; // Inner loop checks for duplicates of `tmp`
-            
+            Node<T> q = tmp.next; 
             while (q != null) {
                 if (q.data.equals(tmp.data)) {
-                    // Remove duplicate node `q`
                     if (q.next != null) {
                         q.next.previous = q.previous;
                     }
@@ -121,17 +117,59 @@ public class LinkedList<T> {
                         q.previous.next = q.next;
                     }
                     if (q == head) {
-                        head = q.next; // Update head if necessary
+                        head = q.next; 
                     }
-                    size--; // Decrement size
+                    size--; 
                 }
-                q = q.next; // Move to the next node
+                q = q.next;
             }
-            
-            tmp = tmp.next; // Move to the next node in the outer loop
+            tmp = tmp.next; 
         }
     }
 
+    static LinkedList<Integer> intersection(LinkedList<Integer> l1, LinkedList<Integer> l2) {
+        LinkedList<Integer> intersect = new LinkedList<>();
+       
+        if (!l1.empty() && !l2.empty()) {
+            l1.findFirst();
+            while (!l1.last()) {
+                l2.findFirst();
+                while (!l2.last()) {
+                    if (l1.retrieve() == l2.retrieve()) {
+                        intersect.insert(l1.retrieve());
+                        break;
+                    }
+                    l2.findNext();
+                }
+                if (l1.retrieve() == l2.retrieve())
+                    intersect.insert(l1.retrieve());
+                l1.findNext();
+            }
+            l2.findFirst(); // for the last elemant in l1
+            while (!l2.last()) {
+                if (l1.retrieve() == l2.retrieve()) {
+                    intersect.insert(l1.retrieve());
+                    break;
+                }
+                l2.findNext();
+            }
+            if (l1.retrieve() == l2.retrieve())
+                intersect.insert(l1.retrieve());
+           
+        }
+        return intersect;
+    }
+    
+    static LinkedList<Integer> union(LinkedList<Integer> l1, LinkedList<Integer> l2) {
+        if(!l1.empty() && !l2.empty()){
+            l1.marge(l2);
+            l1.removeDuplicate();
+            return  l1;
+        }
+        return l1.empty()?l2:l1;
+        
+    }
+    
     public T retrieveDocumentIDs ( String word){
         Node<T> tmp =head;
         while (tmp!=null) {
